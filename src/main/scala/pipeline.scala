@@ -19,7 +19,7 @@ trait Pipeline[A,B] {
     ReaderT(fb => IO { fb.write.json(path) })
   }
 
-  def program[A,B](input: String, f: A=>B,  output: String)(implicit spark: SparkSession): IO[Unit] = for {
+  def program(input: String, f: A=>B,  output: String)(implicit spark: SparkSession): IO[Unit] = for {
     r <- read(input)(spark)
     t <- transform(f)(r)
     w <- write(output)(t)
